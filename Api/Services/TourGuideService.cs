@@ -93,7 +93,7 @@ public class TourGuideService : ITourGuideService
     public List<Attraction> GetNearByAttractions(VisitedLocation visitedLocation)
     {
         return _gpsUtil.GetAttractions()
-            .OrderBy(a => _rewardsService.GetDistance(new Locations(a.Latitude, a.Longitude), visitedLocation.Location))
+            .OrderBy(a => _rewardsService.GetDistance(a as Locations, visitedLocation.Location))
             .Take(5)
             .ToList();
     }
