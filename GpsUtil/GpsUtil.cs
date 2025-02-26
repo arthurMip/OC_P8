@@ -11,7 +11,6 @@ namespace GpsUtil;
 public class GpsUtil
 {
     private static readonly SemaphoreSlim rateLimiter = new(1000, 1000);
-
     public VisitedLocation GetUserLocation(Guid userId)
     {
         rateLimiter.Wait();

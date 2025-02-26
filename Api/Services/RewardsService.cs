@@ -1,4 +1,5 @@
-﻿using GpsUtil.Location;
+﻿using System.Collections.Concurrent;
+using GpsUtil.Location;
 using TourGuide.LibrairiesWrappers.Interfaces;
 using TourGuide.Services.Interfaces;
 using TourGuide.Users;
@@ -38,10 +39,14 @@ public class RewardsService : IRewardsService
         List<VisitedLocation> userLocations = user.VisitedLocations;
         List<Attraction> attractions = _gpsUtil.GetAttractions();
 
-        foreach (var visitedLocation in userLocations)
+        for (int i = 0; i < userLocations.Count; i++)
         {
-            foreach (var attraction in attractions)
+            var visitedLocation = userLocations[i];
+
+            for (int j = 0; j < attractions.Count; j++)
             {
+                var attraction = attractions[j];
+
                 if (!user.UserRewards.Any(r => r.Attraction.AttractionName == attraction.AttractionName))
                 {
                     if (NearAttraction(visitedLocation, attraction))

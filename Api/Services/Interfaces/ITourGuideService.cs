@@ -13,9 +13,9 @@ namespace TourGuide.Services.Interfaces
         List<User> GetAllUsers();
         List<Attraction> GetNearByAttractions(VisitedLocation visitedLocation);
         List<Provider> GetTripDeals(User user);
-        User GetUser(string userName);
-        VisitedLocation GetUserLocation(User user);
+        User? GetUser(string userName);
+        Task<VisitedLocation> GetUserLocation(User user);
         List<UserReward> GetUserRewards(User user);
-        VisitedLocation TrackUserLocation(User user);
+        Task<VisitedLocation> TrackUserLocation(User user);
     }
 }
