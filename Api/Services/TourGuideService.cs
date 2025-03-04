@@ -90,13 +90,15 @@ public class TourGuideService : ITourGuideService
     {
         VisitedLocation visitedLocation = await _gpsUtil.GetUserLocation(user.UserId);
         user.AddToVisitedLocations(visitedLocation);
-        _rewardsService.CalculateRewards(user);
+        await _rewardsService.CalculateRewards(user);
         return visitedLocation;
     }
 
-    public List<Attraction> GetNearByAttractions(VisitedLocation visitedLocation)
+    public async Task<List<Attraction>> GetNearByAttractions(VisitedLocation visitedLocation)
     {
-        return _gpsUtil.GetAttractions()
+        var attractions = await _gpsUtil.GetAttractions();
+
+        return attractions
             .OrderBy(a => _rewardsService.GetDistance(a as Locations, visitedLocation.Location))
             .Take(5)
             .ToList();

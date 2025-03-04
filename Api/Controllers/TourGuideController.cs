@@ -58,7 +58,7 @@ public class TourGuideController : ControllerBase
         }
 
         var visitedLocation = await _tourGuideService.GetUserLocation(user);
-        var attractions =  _tourGuideService.GetNearByAttractions(visitedLocation);
+        var attractions =  await _tourGuideService.GetNearByAttractions(visitedLocation);
 
         var result = attractions.Select(a =>
             new NearbyAttraction
