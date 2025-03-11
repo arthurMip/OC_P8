@@ -27,21 +27,12 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
 
-    - name: List TestResults folder
-      run: ls -R TestResults
-      
-    - name: Publish Test Results
-      if: always()
-      uses: actions/upload-artifact@v4
+    - name: Dotnet Test Reporter
+      uses: bibipkins/dotnet-test-reporter@v1.5.1
       with:
-        name: test-results
-        path: ./TestResults
-
-    - name: Report Test Results
-      if: always()
-      uses: dorny/test-reporter@v1
-      with:
-        name: Test Results
-        path: ./TestResults/test-results.trx
-        reporter: dotnet-trx
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        comment-title: 'Unit Test Results'
+        results-path: ./TestResults/*.trx
+        coverage-path: ./TestResults/coverage.xml
+        coverage-threshold: 80
 
