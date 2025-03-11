@@ -25,8 +25,11 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal --logger trx --results-directory TestResults
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
 
+    - name: List TestResults folder
+      run: ls -R TestResults
+      
     - name: Publish Test Results
       if: always()
       uses: actions/upload-artifact@v4
@@ -41,3 +44,4 @@ jobs:
         name: Test Results
         path: ./TestResults/test-results.trx
         reporter: dotnet-trx
+
