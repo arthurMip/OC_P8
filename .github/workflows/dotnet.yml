@@ -25,4 +25,14 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" --results-directory TestResults
+
+    - name: Dotnet Test Reporter
+      uses: bibipkins/dotnet-test-reporter@v1.5.1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        comment-title: 'Unit Test Results'
+        results-path: ./TestResults/*.trx
+        coverage-path: ./TestResults/coverage.xml
+        coverage-threshold: 80
+
