@@ -60,7 +60,6 @@ public class RewardsService : IRewardsService
 
     public bool IsWithinAttractionProximity(Attraction attraction, Locations location)
     {
-        Console.WriteLine(GetDistance(attraction, location));
         return GetDistance(attraction, location) <= _attractionProximityRange;
     }
 
